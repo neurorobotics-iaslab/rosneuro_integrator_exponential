@@ -19,6 +19,7 @@ class Exponential : public GenericIntegrator {
 		bool configure(void);
 		Eigen::VectorXf apply(const Eigen::VectorXf& input);
 		bool reset(void);
+		void setalpha(float value);
 
 
 	private:
@@ -27,6 +28,7 @@ class Exponential : public GenericIntegrator {
 	private:
 		ros::NodeHandle p_nh_;
 		float alpha_;
+		const float alpha_default_ = 0.98f;
 		Eigen::Vector2f data_;
 		
 
