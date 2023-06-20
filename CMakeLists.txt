@@ -12,6 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
 			 roscpp 
 			 std_msgs
 			 pluginlib
+			 dynamic_reconfigure
 			 rosneuro_msgs)
 
 find_package(Eigen3 REQUIRED)
@@ -19,6 +20,9 @@ find_package(rosneuro_integrator ${ROSNEURO_INTEGRATOR_MIN_VERSION} REQUIRED)
 
 SET(CMAKE_BUILD_TYPE RelWithDebInfo)
 
+generate_dynamic_reconfigure_options(
+	cfg/Exponential.cfg
+)
 
 ##############################################################################
 # Define package
@@ -58,6 +62,7 @@ target_link_libraries(${PROJECT_NAME} ${Eigen3_LIBRARIES}
 
 add_dependencies(${PROJECT_NAME} 
 				 ${catkin_EXPORTED_TARGETS}
+				 ${PROJECT_NAME}_gencfg
 )
 
 

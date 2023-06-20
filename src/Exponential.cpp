@@ -11,7 +11,15 @@ Exponential::~Exponential(void) {
 }
 
 bool Exponential::configure(void) {
-	this->p_nh_.param<float>("alpha", this->alpha_, 0.97f);
+	float alpha;
+	
+	this->p_nh_.param<float>("alpha", alpha, this->alpha_default_);
+	this->setalpha(alpha);
+
+	// Bind dynamic reconfigure callback
+	this->recfg_callback_type_ = boost::bind(&Exponential::on_request_reconfigure, this, _1, _2);
+	this->recfg_srv_.setCallback(this->recfg_callback_type_);
+
 	return true;
 }
 
@@ -35,6 +43,26 @@ bool Exponential::reset(void) {
 
 Eigen::VectorXf Exponential::uniform_vector(float value) {
 	return Eigen::Vector2f::Constant(value);
+}
+
+void Exponential::setalpha(float value) {
+
+	if(value < 0.0f | value > 1.0f) {
+		this->alpha_ = this->alpha_default_;
+		ROS_INFO("[%s] Alpha value is not legal (alpha=%f). Alpha set to the default value (alpha=%f)",
+				 this->name().c_str(), value, this->alpha_);
+	} else {
+		this->alpha_ = value;
+		ROS_INFO("[%s] Alpha set to %f\n", this->name().c_str(), this->alpha_);
+	}
+}
+
+
+void Exponential::on_request_reconfigure(rosneuro_config_exponential &config, uint32_t level) {
+
+	if( std::fabs(config.alpha - this->alpha_) > 0.00001) {
+		this->setalpha(config.alpha);
+	}
 }
 
 }
