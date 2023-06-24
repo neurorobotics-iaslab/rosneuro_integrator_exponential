@@ -11,6 +11,7 @@
 
 
 namespace rosneuro {
+	namespace integrator {
 
 using rosneuro_config_exponential = rosneuro_integrator_exponential::ExponentialConfig;
 using dyncfg_exponential          = dynamic_reconfigure::Server<rosneuro_config_exponential>;
@@ -45,8 +46,9 @@ class Exponential : public GenericIntegrator {
 
 };
 
-PLUGINLIB_EXPORT_CLASS(rosneuro::Exponential, rosneuro::GenericIntegrator)
+PLUGINLIB_EXPORT_CLASS(rosneuro::integrator::Exponential, rosneuro::integrator::GenericIntegrator)
 
+	}
 }
 
 #endif

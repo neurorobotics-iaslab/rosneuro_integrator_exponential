@@ -1,6 +1,7 @@
 #include "rosneuro_integrator_exponential/Exponential.h"
 
 namespace rosneuro {
+	namespace integrator {
 
 Exponential::Exponential(void) : p_nh_("~") {
 	this->setname("exponential");
@@ -65,4 +66,5 @@ void Exponential::on_request_reconfigure(rosneuro_config_exponential &config, ui
 	}
 }
 
+	}
 }
