@@ -64,7 +64,7 @@ void Exponential::setalpha(float value) {
 				 this->name().c_str(), value, this->alpha_);
 	} else {
 		this->alpha_ = value;
-		ROS_INFO("[%s] Alpha set to %f\n", this->name().c_str(), this->alpha_);
+		ROS_INFO("[%s] Alpha set to %f", this->name().c_str(), this->alpha_);
 	}
 }
 
@@ -77,7 +77,7 @@ void Exponential::setrejection(float value) {
 				 this->name().c_str(), value);
 	} else {
 		this->rejection_ = value;
-		ROS_INFO("[%s] Rejection set to %f\n", this->name().c_str(), this->rejection_);
+		ROS_INFO("[%s] Rejection set to %f", this->name().c_str(), this->rejection_);
 	}
 }
 
