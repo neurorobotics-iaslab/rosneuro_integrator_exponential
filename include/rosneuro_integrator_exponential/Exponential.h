@@ -8,13 +8,18 @@
 
 #include "rosneuro_integrator/GenericIntegrator.h"
 #include "rosneuro_integrator_exponential/ExponentialConfig.h"
+#include "rosneuro_integrator_exponential/ExponentialMarginConfig.h"
 
 
 namespace rosneuro {
 	namespace integrator {
 
-using rosneuro_config_exponential = rosneuro_integrator_exponential::ExponentialConfig;
+using rosneuro_config_exponential       = rosneuro_integrator_exponential::ExponentialConfig;
+using rosneuro_config_exponentialmargin = rosneuro_integrator_exponential::ExponentialMarginConfig;
+
 using dyncfg_exponential          = dynamic_reconfigure::Server<rosneuro_config_exponential>;
+using dyncfg_exponential_margin   = dynamic_reconfigure::Server<rosneuro_config_exponentialmargin>;
+
 
 class Exponential : public GenericIntegrator {
 
@@ -32,6 +37,8 @@ class Exponential : public GenericIntegrator {
 	private:
 		Eigen::VectorXf uniform_vector(float value);
 		void on_request_reconfigure(rosneuro_config_exponential &config, uint32_t level);
+		void on_request_reconfigure_margin(rosneuro_config_exponentialmargin &config, uint32_t level);
+
 
 	private:
 		ros::NodeHandle p_nh_;
@@ -43,8 +50,12 @@ class Exponential : public GenericIntegrator {
 
 		dyncfg_exponential recfg_srv_;
   		dyncfg_exponential::CallbackType recfg_callback_type_;
+  		
+		dyncfg_exponential_margin::CallbackType recfg_callback_type_margin_;
 		
+		std::vector<double> string2vector_converter(std::string msg);
 
+		std::vector<double> thresholds_final_;
 
 };
 

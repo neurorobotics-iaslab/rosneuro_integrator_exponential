@@ -22,6 +22,7 @@ SET(CMAKE_BUILD_TYPE RelWithDebInfo)
 
 generate_dynamic_reconfigure_options(
 	cfg/Exponential.cfg
+	cfg/ExponentialMargin.cfg
 )
 
 ##############################################################################
