@@ -34,7 +34,7 @@ bool Exponential::configure(void) {
 	this->recfg_srv_.setCallback(this->recfg_callback_type_);
 
 	// Bind dynamic reconfigure callback
-	ros::NodeHandle node_handle("~cybathlon_feedback");
+	ros::NodeHandle node_handle("~thresholds_margin");
 	dyncfg_exponential_margin *recfg_srv_margin = new dyncfg_exponential_margin(node_handle);
 	this->recfg_callback_type_margin_ = boost::bind(&Exponential::on_request_reconfigure_margin, this, _1, _2);
 	recfg_srv_margin->setCallback(this->recfg_callback_type_margin_);
