@@ -10,6 +10,8 @@
 #include "rosneuro_integrator_exponential/ExponentialConfig.h"
 #include "rosneuro_integrator_exponential/ExponentialMarginConfig.h"
 
+#include "rosneuro_msgs/NeuroEvent.h"
+
 
 namespace rosneuro {
 	namespace integrator {
@@ -38,6 +40,7 @@ class Exponential : public GenericIntegrator {
 		Eigen::VectorXf uniform_vector(float value);
 		void on_request_reconfigure(rosneuro_config_exponential &config, uint32_t level);
 		void on_request_reconfigure_margin(rosneuro_config_exponentialmargin &config, uint32_t level);
+		void on_received_neuroevent(const rosneuro_msgs::NeuroEvent& msg);
 
 
 	private:
@@ -47,6 +50,7 @@ class Exponential : public GenericIntegrator {
 		bool has_rejection_;
 		const float alpha_default_ = 0.98f;
 		Eigen::Vector2f data_;
+		ros::Subscriber subevt_;
 
 		dyncfg_exponential recfg_srv_;
   		dyncfg_exponential::CallbackType recfg_callback_type_;

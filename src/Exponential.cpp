@@ -29,6 +29,9 @@ bool Exponential::configure(void) {
     ros::param::param("~threshold_final", tstf, tstf);
     this->thresholds_final_ = this->string2vector_converter(tstf);
 
+	// subscribe to the event_bus
+	this->subevt_  = this->p_nh_.subscribe("/events/bus", 1, &Exponential::on_received_neuroevent, this);
+
 	// Bind dynamic reconfigure callback
 	this->recfg_callback_type_ = boost::bind(&Exponential::on_request_reconfigure, this, _1, _2);
 	this->recfg_srv_.setCallback(this->recfg_callback_type_);
@@ -119,6 +122,11 @@ std::vector<double> Exponential::string2vector_converter(std::string msg){
 	
 }
 
+void Exponential::on_received_neuroevent(const rosneuro_msgs::NeuroEvent& msg){
+	if(msg.event == 1024+0x8000){
+		reset();
+	}
+}
 
 void Exponential::on_request_reconfigure(rosneuro_config_exponential &config, uint32_t level) {
 
