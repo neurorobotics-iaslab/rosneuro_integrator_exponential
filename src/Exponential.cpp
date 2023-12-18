@@ -18,6 +18,8 @@ bool Exponential::configure(void) {
 	
 	this->p_nh_.param<float>("alpha", alpha, this->alpha_default_);
 	this->setalpha(alpha);
+
+	this->p_nh_.param<bool>("to_reset", this->to_reset, false);
 	
 	if(this->p_nh_.param("rejection", rejection) == false) {
 		this->has_rejection_ = false;
@@ -123,7 +125,7 @@ std::vector<double> Exponential::string2vector_converter(std::string msg){
 }
 
 void Exponential::on_received_neuroevent(const rosneuro_msgs::NeuroEvent& msg){
-	if(msg.event == 1024+0x8000){
+	if(msg.event == 1024+0x8000 && this->to_reset){
 		reset();
 	}
 }

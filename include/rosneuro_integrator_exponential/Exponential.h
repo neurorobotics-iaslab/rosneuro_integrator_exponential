@@ -48,6 +48,7 @@ class Exponential : public GenericIntegrator {
 		float alpha_;
 		float rejection_;
 		bool has_rejection_;
+		bool to_reset;
 		const float alpha_default_ = 0.98f;
 		Eigen::Vector2f data_;
 		ros::Subscriber subevt_;
