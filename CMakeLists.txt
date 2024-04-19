@@ -42,6 +42,13 @@ catkin_package(
   DEPENDS
 )
 
+##############################################################################
+# TEST
+##############################################################################
+
+catkin_add_gtest(TestExponential test/TestExponential.cpp)
+target_link_libraries(TestExponential ${GTEST_BOTH_LIBRARIES} pthread gmock)
+target_link_libraries(TestExponential ${PROJECT_NAME} ${catkin_LIBRARIES})
 
 ##############################################################################
 # Build
